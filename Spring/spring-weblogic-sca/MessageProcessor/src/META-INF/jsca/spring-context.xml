@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sca="http://xmlns.oracle.com/weblogic/weblogic-sca"
+       xmlns:wlsb="http://xmlns.oracle.com/weblogic/weblogic-sca-binding"
+       xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	       http://xmlns.oracle.com/weblogic/weblogic-sca http://xmlns.oracle.com/weblogic/weblogic-sca/1.0/weblogic-sca.xsd
+	       http://xmlns.oracle.com/weblogic/weblogic-sca-binding http://xmlns.oracle.com/weblogic/weblogic-sca-binding/1.0/weblogic-sca-binding.xsd
+       ">
+	<sca:service name="MessageProcessorService" type="name.samolisov.message.processor.MessageProcessorService" 
+				 target="MessageProcessor">
+		<!-- <wlsb:binding.ejb name="MessageProcessor" remote="true" uri="messageprocessor"/>-->
+		<wlsb:binding.ws port="MessageProcessor" uri="/adapter" soapVersion="1.1" name="MessageProcessorService"/>		
+	</sca:service>
+	
+	<sca:reference name="MessageEnricher" type="name.samolisov.message.enricher.MessageEnricherService">
+		<wlsb:binding.ejb name="MessageEnricher" remote="true" uri="messagenricher#name.samolisov.message.enricher.MessageEnricherServiceRemote"/>
+	</sca:reference>
+	
+	<sca:reference name="AdapterEndpoint" type="name.samolisov.adapter.endpoint.AdapterEndpoint">
+		<wlsb:binding.ejb name="AdapterEndpoint" remote="true" uri="destination#name.samolisov.adapter.endpoint.AdapterEndpoint"/>
+	</sca:reference>
+	
+	<bean id="MessageProcessor" class="name.samolisov.message.processor.MessageProcessorServiceImpl">
+		<property name="src" value="SAP"/>
+		<property name="dst" value="OEBS"/>
+		<property name="endpoint" ref="AdapterEndpoint"/>
+		<property name="enricher" ref="MessageEnricher"/>
+	</bean>
+</beans>
