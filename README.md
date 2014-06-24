@@ -13,3 +13,4 @@ Scheme/Lisp/Clojure editor plug-in for [Eclipse SDK](http://eclipse.org).
  * `Spring/spring-hibernate-annotations` - a demo of using Spring + Hibernate + Container Management Transactions (CMT).
  * `Spring/spring-hibernate-interceptor` - a demo of using Spring + Hibernate Interceptor for Hibernate Session management.
  * `Spring/spring-jta-xa` - a demo of using global transactions via `Atomikos TransactionsEssentials`.
+ * `Spring/spring-message-driven-pojo` - same Message-Driven POJO example`.
