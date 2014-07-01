@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="WebApp_ID" version="2.5">
+    <display-name>Spring WorkManager with Servlets Demo</display-name>
+
+    <servlet>
+        <servlet-name>demoservlet</servlet-name>
+        <servlet-class>name.samolisov.demo.spring.workmanager.WmDemoServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>demoservlet</servlet-name>
+        <url-pattern>/wmdemo</url-pattern>
+    </servlet-mapping>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+
+    <resource-ref>
+        <res-ref-name>wm/demomanager</res-ref-name>
+        <res-type>commonj.work.WorkManager</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
+</web-app>
